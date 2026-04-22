@@ -78,31 +78,12 @@ const Projects = () => {
                     {p.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-2 mb-6">
+                  <div className="flex flex-wrap gap-2">
                     {p.tech.map((t) => (
                       <span key={t} className="text-xs glass px-3 py-1 rounded-full text-muted-foreground">
                         {t}
                       </span>
                     ))}
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <a
-                      href={p.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm font-medium hover:text-primary-glow transition"
-                    >
-                      <ExternalLink className="w-4 h-4" /> Live
-                    </a>
-                    <a
-                      href={p.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm font-medium hover:text-primary-glow transition"
-                    >
-                      <Github className="w-4 h-4" /> Code
-                    </a>
                   </div>
                 </div>
               </GlassCard>
