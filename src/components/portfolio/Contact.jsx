@@ -178,6 +178,7 @@ const Contact = () => {
                 <div>
                   <label className="text-xs text-muted-foreground uppercase tracking-wider mb-2 block">Name</label>
                   <input
+                    ref={nameRef}
                     type="text"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
