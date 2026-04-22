@@ -1,9 +1,15 @@
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import Section from "./Section";
 import GlassCard from "./GlassCard";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone, Send, Github, Linkedin } from "lucide-react";
 import { toast } from "sonner";
+
+// 👇 PASTE YOUR EMAILJS CREDENTIALS HERE — get them free at https://www.emailjs.com
+const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
 
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -17,16 +23,42 @@ const Contact = () => {
     }
     setSending(true);
 
-    // Open user's mail client with prefilled message (works without backend)
-    const subject = encodeURIComponent(`Portfolio inquiry from ${form.name}`);
-    const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
-    window.location.href = `mailto:roshankr9894@gmail.com?subject=${subject}&body=${body}`;
+    const notConfigured =
+      EMAILJS_SERVICE_ID === "YOUR_SERVICE_ID" ||
+      EMAILJS_TEMPLATE_ID === "YOUR_TEMPLATE_ID" ||
+      EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY";
 
-    setTimeout(() => {
-      toast.success("Opening your mail app — message ready to send!");
+    if (notConfigured) {
+      // Fallback: open user's mail client with prefilled message
+      const subject = encodeURIComponent(`Portfolio inquiry from ${form.name}`);
+      const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
+      window.location.href = `mailto:roshankr9894@gmail.com?subject=${subject}&body=${body}`;
+      toast.success("Opening your mail app — paste your EmailJS keys to enable direct sending!");
       setForm({ name: "", email: "", message: "" });
       setSending(false);
-    }, 600);
+      return;
+    }
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          message: form.message,
+          to_email: "roshankr9894@gmail.com",
+        },
+        { publicKey: EMAILJS_PUBLIC_KEY }
+      );
+      toast.success("Message sent! I'll get back to you soon. 🚀");
+      setForm({ name: "", email: "", message: "" });
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      toast.error("Couldn't send — please try again or email me directly.");
+    } finally {
+      setSending(false);
+    }
   };
 
   const contactInfo = [
