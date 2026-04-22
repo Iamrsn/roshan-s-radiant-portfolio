@@ -101,7 +101,13 @@ const Freelance = () => {
             ))}
 
             <motion.a
-              href="#contact"
+              href="#contact?service=web-app"
+              onClick={(e) => {
+                e.preventDefault();
+                window.dispatchEvent(new CustomEvent("prefill-contact", { detail: { service: "web-app" } }));
+                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                history.replaceState(null, "", "#contact");
+              }}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
