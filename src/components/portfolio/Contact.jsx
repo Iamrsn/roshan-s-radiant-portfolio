@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import emailjs from "@emailjs/browser";
 import Section from "./Section";
 import GlassCard from "./GlassCard";
@@ -11,17 +11,47 @@ const EMAILJS_SERVICE_ID = "service_7efnk68";
 const EMAILJS_TEMPLATE_ID = "template_69n0yq8";
 const EMAILJS_PUBLIC_KEY = "Z2F4bw_GvkEL1AIwv";
 
+const SERVICE_OPTIONS = [
+  { value: "web-app", label: "Web app (MERN / full-stack)" },
+  { value: "landing-page", label: "Landing page / portfolio" },
+  { value: "bug-fix", label: "Bug fix / code review" },
+  { value: "api-auth", label: "API / Auth (REST + RBAC)" },
+  { value: "other", label: "Something else" },
+];
+
 const Contact = () => {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    service: "",
+    budget: "",
+    message: "",
+  });
   const [sending, setSending] = useState(false);
+
+  // Allow other sections (e.g. Freelance CTA) to prefill the service selector
+  useEffect(() => {
+    const handler = (e) => {
+      const service = e?.detail?.service;
+      if (service) {
+        setForm((f) => ({ ...f, service }));
+      }
+    };
+    window.addEventListener("prefill-contact", handler);
+    return () => window.removeEventListener("prefill-contact", handler);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
-      toast.error("Please fill in all fields");
+      toast.error("Please fill in your name, email, and message");
       return;
     }
     setSending(true);
+
+    const serviceLabel =
+      SERVICE_OPTIONS.find((s) => s.value === form.service)?.label || "Not specified";
+    const budgetLabel = form.budget?.trim() || "Not specified";
 
     const notConfigured =
       EMAILJS_SERVICE_ID === "YOUR_SERVICE_ID" ||
@@ -29,12 +59,13 @@ const Contact = () => {
       EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY";
 
     if (notConfigured) {
-      // Fallback: open user's mail client with prefilled message
       const subject = encodeURIComponent(`Portfolio inquiry from ${form.name}`);
-      const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
+      const body = encodeURIComponent(
+        `Service: ${serviceLabel}\nBudget: ${budgetLabel}\n\n${form.message}\n\n— ${form.name} (${form.email})`
+      );
       window.location.href = `mailto:roshancode2004@gmail.com?subject=${subject}&body=${body}`;
       toast.success("Opening your mail app — paste your EmailJS keys to enable direct sending!");
-      setForm({ name: "", email: "", message: "" });
+      setForm({ name: "", email: "", service: "", budget: "", message: "" });
       setSending(false);
       return;
     }
@@ -46,13 +77,15 @@ const Contact = () => {
         {
           from_name: form.name,
           from_email: form.email,
+          service_type: serviceLabel,
+          budget: budgetLabel,
           message: form.message,
           to_email: "roshancode2004@gmail.com",
         },
         { publicKey: EMAILJS_PUBLIC_KEY }
       );
       toast.success("Message sent! I'll get back to you soon. 🚀");
-      setForm({ name: "", email: "", message: "" });
+      setForm({ name: "", email: "", service: "", budget: "", message: "" });
     } catch (err) {
       console.error("EmailJS error:", err);
       toast.error("Couldn't send — please try again or email me directly.");
@@ -66,6 +99,9 @@ const Contact = () => {
     { icon: Phone, label: "Phone", value: "+91 8299101626", href: "tel:+918299101626" },
     { icon: MapPin, label: "Location", value: "Varanasi, India", href: "#" },
   ];
+
+  const inputClass =
+    "w-full glass rounded-xl px-4 py-3 bg-transparent text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/50 transition";
 
   return (
     <Section id="contact">
@@ -138,7 +174,7 @@ const Contact = () => {
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     placeholder="Your name"
-                    className="w-full glass rounded-xl px-4 py-3 bg-transparent text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/50 transition"
+                    className={inputClass}
                   />
                 </div>
                 <div>
@@ -148,7 +184,41 @@ const Contact = () => {
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     placeholder="you@example.com"
-                    className="w-full glass rounded-xl px-4 py-3 bg-transparent text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/50 transition"
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs text-muted-foreground uppercase tracking-wider mb-2 block">
+                    Service type
+                  </label>
+                  <select
+                    value={form.service}
+                    onChange={(e) => setForm({ ...form, service: e.target.value })}
+                    className={`${inputClass} appearance-none cursor-pointer`}
+                  >
+                    <option value="" className="bg-background text-foreground">
+                      Select a service…
+                    </option>
+                    {SERVICE_OPTIONS.map((opt) => (
+                      <option key={opt.value} value={opt.value} className="bg-background text-foreground">
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs text-muted-foreground uppercase tracking-wider mb-2 block">
+                    Project budget <span className="normal-case tracking-normal text-muted-foreground/70">(optional)</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={form.budget}
+                    onChange={(e) => setForm({ ...form, budget: e.target.value })}
+                    placeholder="e.g. $500 – $1,500"
+                    className={inputClass}
                   />
                 </div>
               </div>
@@ -160,7 +230,7 @@ const Contact = () => {
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   placeholder="Tell me about your project..."
-                  className="w-full glass rounded-xl px-4 py-3 bg-transparent text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/50 transition resize-none"
+                  className={`${inputClass} resize-none`}
                 />
               </div>
 
