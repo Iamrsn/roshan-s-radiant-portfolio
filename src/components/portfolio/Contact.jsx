@@ -7,7 +7,7 @@ import { Mail, MapPin, Phone, Send, Github, Linkedin } from "lucide-react";
 import { toast } from "sonner";
 
 // 👇 PASTE YOUR EMAILJS CREDENTIALS HERE — get them free at https://www.emailjs.com
-const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+const EMAILJS_SERVICE_ID = "service_7efnk68";
 const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
 const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
 
@@ -32,7 +32,7 @@ const Contact = () => {
       // Fallback: open user's mail client with prefilled message
       const subject = encodeURIComponent(`Portfolio inquiry from ${form.name}`);
       const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
-      window.location.href = `mailto:roshankr9894@gmail.com?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:roshancode2004@gmail.com?subject=${subject}&body=${body}`;
       toast.success("Opening your mail app — paste your EmailJS keys to enable direct sending!");
       setForm({ name: "", email: "", message: "" });
       setSending(false);
@@ -47,7 +47,7 @@ const Contact = () => {
           from_name: form.name,
           from_email: form.email,
           message: form.message,
-          to_email: "roshankr9894@gmail.com",
+          to_email: "roshancode2004@gmail.com",
         },
         { publicKey: EMAILJS_PUBLIC_KEY }
       );
@@ -62,7 +62,7 @@ const Contact = () => {
   };
 
   const contactInfo = [
-    { icon: Mail, label: "Email", value: "roshankr9894@gmail.com", href: "mailto:roshankr9894@gmail.com" },
+    { icon: Mail, label: "Email", value: "roshancode2004@gmail.com", href: "mailto:roshancode2004@gmail.com" },
     { icon: Phone, label: "Phone", value: "+91 8299101626", href: "tel:+918299101626" },
     { icon: MapPin, label: "Location", value: "Varanasi, India", href: "#" },
   ];
@@ -112,7 +112,7 @@ const Contact = () => {
                 {[
                   { icon: Github, href: "https://github.com/" },
                   { icon: Linkedin, href: "https://linkedin.com/" },
-                  { icon: Mail, href: "mailto:roshankr9894@gmail.com" },
+                  { icon: Mail, href: "mailto:roshancode2004@gmail.com" },
                 ].map((s, i) => (
                   <a
                     key={i}
