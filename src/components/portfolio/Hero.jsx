@@ -60,7 +60,7 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="text-xl md:text-2xl text-muted-foreground mb-4 font-display"
         >
-          Frontend Developer · <span className="text-gradient font-semibold">MERN Stack</span>
+          Full Stack Developer · <span className="text-gradient font-semibold">MERN Stack</span>
         </motion.p>
 
         <motion.p
