@@ -8,25 +8,21 @@ const services = [
     icon: Layout,
     title: "Frontend Development",
     desc: "Pixel-perfect, responsive UIs with React + Tailwind. Smooth animations, accessible components, blazing-fast performance.",
-    price: "From ₹8,000",
   },
   {
     icon: Server,
     title: "Backend & APIs",
     desc: "Robust REST APIs with Node, Express & MongoDB. JWT auth, role-based access, secure data flows.",
-    price: "From ₹12,000",
   },
   {
     icon: Code,
     title: "Full-Stack MERN Apps",
     desc: "End-to-end MERN applications — dashboards, portals, real-time apps. Deployed and production-ready.",
-    price: "From ₹25,000",
   },
   {
     icon: Zap,
     title: "Bug Fixes & Optimization",
     desc: "Performance audits, refactoring, fixing tricky bugs in your existing React or Node codebase.",
-    price: "Hourly",
   },
 ];
 
@@ -64,12 +60,9 @@ const Services = () => {
                 </div>
                 <h3 className="font-display font-semibold text-lg mb-2">{s.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-1">{s.desc}</p>
-                <div className="pt-4 border-t border-border flex items-center justify-between">
-                  <span className="text-sm font-semibold text-gradient">{s.price}</span>
-                  <a href="#contact" className="text-muted-foreground hover:text-primary-glow transition">
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </div>
+                <a href="#contact" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary-glow hover:gap-2.5 transition-all">
+                  Get in touch <ArrowRight className="w-4 h-4" />
+                </a>
               </GlassCard>
             </motion.div>
           ))}
