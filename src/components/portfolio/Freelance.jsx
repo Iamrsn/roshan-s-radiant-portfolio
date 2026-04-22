@@ -104,7 +104,9 @@ const Freelance = () => {
               href="#contact?service=web-app"
               onClick={(e) => {
                 e.preventDefault();
-                window.dispatchEvent(new CustomEvent("prefill-contact", { detail: { service: "web-app" } }));
+                window.dispatchEvent(
+                  new CustomEvent("prefill-contact", { detail: { service: "web-app", focus: true } })
+                );
                 document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
                 history.replaceState(null, "", "#contact");
               }}

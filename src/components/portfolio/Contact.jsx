@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import Section from "./Section";
 import GlassCard from "./GlassCard";
@@ -28,13 +28,21 @@ const Contact = () => {
     message: "",
   });
   const [sending, setSending] = useState(false);
+  const nameRef = useRef(null);
 
   // Allow other sections (e.g. Freelance CTA) to prefill the service selector
   useEffect(() => {
     const handler = (e) => {
       const service = e?.detail?.service;
+      const focus = e?.detail?.focus;
       if (service) {
         setForm((f) => ({ ...f, service }));
+      }
+      if (focus) {
+        // Wait for smooth scroll to settle before focusing
+        setTimeout(() => {
+          nameRef.current?.focus({ preventScroll: true });
+        }, 700);
       }
     };
     window.addEventListener("prefill-contact", handler);
@@ -170,6 +178,7 @@ const Contact = () => {
                 <div>
                   <label className="text-xs text-muted-foreground uppercase tracking-wider mb-2 block">Name</label>
                   <input
+                    ref={nameRef}
                     type="text"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
