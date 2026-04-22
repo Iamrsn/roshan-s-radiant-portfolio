@@ -8,8 +8,8 @@ import { toast } from "sonner";
 
 // 👇 PASTE YOUR EMAILJS CREDENTIALS HERE — get them free at https://www.emailjs.com
 const EMAILJS_SERVICE_ID = "service_7efnk68";
-const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
-const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+const EMAILJS_TEMPLATE_ID = "template_69n0yq8";
+const EMAILJS_PUBLIC_KEY = "Z2F4bw_GvkEL1AIwv";
 
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
