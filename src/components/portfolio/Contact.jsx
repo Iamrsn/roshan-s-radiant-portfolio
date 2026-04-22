@@ -3,7 +3,7 @@ import emailjs from "@emailjs/browser";
 import Section from "./Section";
 import GlassCard from "./GlassCard";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Phone, Send, Github, Linkedin } from "lucide-react";
+import { Mail, MapPin, Phone, Send, Github, Linkedin, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 // 👇 PASTE YOUR EMAILJS CREDENTIALS HERE — get them free at https://www.emailjs.com
@@ -167,12 +167,21 @@ const Contact = () => {
               <motion.button
                 type="submit"
                 disabled={sending}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full inline-flex items-center justify-center gap-2 bg-gradient-primary text-primary-foreground font-medium px-7 py-3.5 rounded-xl hover:opacity-90 transition shadow-lg shadow-primary/40 disabled:opacity-50"
+                whileHover={!sending ? { scale: 1.02 } : undefined}
+                whileTap={!sending ? { scale: 0.98 } : undefined}
+                className="w-full inline-flex items-center justify-center gap-2 bg-gradient-primary text-primary-foreground font-medium px-7 py-3.5 rounded-xl hover:opacity-90 transition shadow-lg shadow-primary/40 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                <Send className="w-4 h-4" />
-                {sending ? "Sending..." : "Send Message"}
+                {sending ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    Send Message
+                  </>
+                )}
               </motion.button>
             </form>
           </GlassCard>

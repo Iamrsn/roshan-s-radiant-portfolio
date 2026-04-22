@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Heart } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -11,8 +11,7 @@ const Footer = () => {
               <span className="text-foreground">.dev</span>
             </p>
             <p className="text-sm text-muted-foreground mt-1">
-              © {new Date().getFullYear()} Roshan Kumar Sharma · Made with{" "}
-              <Heart className="w-3 h-3 inline text-primary-glow fill-primary-glow" /> in Varanasi
+              © {new Date().getFullYear()} Roshan Kumar Sharma · All rights reserved
             </p>
           </div>
 
