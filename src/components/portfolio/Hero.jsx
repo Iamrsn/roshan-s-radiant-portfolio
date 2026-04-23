@@ -102,8 +102,8 @@ const Hero = () => {
           className="flex items-center justify-center gap-4"
         >
           {[
-            { icon: Github, href: "https://github.com/", label: "GitHub" },
-            { icon: Linkedin, href: "https://linkedin.com/", label: "LinkedIn" },
+            { icon: Github, href: "https://github.com/Iamrsn", label: "GitHub" },
+            { icon: Linkedin, href: "https://www.linkedin.com/in/roshan-kumar-sharma-7b2bab244/", label: "LinkedIn" },
             { icon: Mail, href: "mailto:roshancode2004@gmail.com", label: "Email" },
           ].map(({ icon: Icon, href, label }) => (
             <a
