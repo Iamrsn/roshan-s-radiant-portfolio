@@ -163,7 +163,7 @@ const Contact = () => {
               <div className="flex gap-3">
                 {[
                   { icon: Github, href: "https://github.com/" },
-                  { icon: Linkedin, href: "https://linkedin.com/" },
+                  { icon: Linkedin, href: "https://www.linkedin.com/in/roshan-kumar-sharma-7b2bab244/" },
                   { icon: Mail, href: "mailto:roshancode2004@gmail.com" },
                 ].map((s, i) => (
                   <a
