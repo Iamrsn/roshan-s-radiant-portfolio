@@ -162,7 +162,7 @@ const Contact = () => {
               <p className="text-xs text-muted-foreground uppercase tracking-wider mb-3">Follow</p>
               <div className="flex gap-3">
                 {[
-                  { icon: Github, href: "https://github.com/" },
+                  { icon: Github, href: "https://github.com/Iamrsn" },
                   { icon: Linkedin, href: "https://www.linkedin.com/in/roshan-kumar-sharma-7b2bab244/" },
                   { icon: Mail, href: "mailto:roshancode2004@gmail.com" },
                 ].map((s, i) => (
