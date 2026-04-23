@@ -72,6 +72,17 @@
     scroll-behavior: smooth;
   }
 
+  /* Offset anchor jumps so the fixed navbar doesn't overlap section headings */
+  section[id] {
+    scroll-margin-top: 6rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', system-ui, sans-serif;
