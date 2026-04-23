@@ -79,12 +79,17 @@ const Contact = () => {
     }
 
     try {
-      await emailjs.send(
+      const response = await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
+          // Common EmailJS template variable names — make sure your EmailJS
+          // template at https://dashboard.emailjs.com uses these {{variables}}:
           from_name: form.name,
           from_email: form.email,
+          reply_to: form.email,
+          name: form.name,
+          email: form.email,
           service_type: serviceLabel,
           budget: budgetLabel,
           message: form.message,
@@ -92,11 +97,14 @@ const Contact = () => {
         },
         { publicKey: EMAILJS_PUBLIC_KEY }
       );
+      console.log("EmailJS success:", response);
       toast.success("Message sent! I'll get back to you soon. 🚀");
       setForm({ name: "", email: "", service: "", budget: "", message: "" });
     } catch (err) {
       console.error("EmailJS error:", err);
-      toast.error("Couldn't send — please try again or email me directly.");
+      const detail =
+        err?.text || err?.message || "Unknown error — check your EmailJS template variables.";
+      toast.error(`Couldn't send: ${detail}`);
     } finally {
       setSending(false);
     }
